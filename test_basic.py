@@ -33,10 +33,12 @@ class LoginTests(TestCase):
     def test_basic_login_cactus_5(self):
         """Basic happy path test of the login"""
         driver = self.driver
+        login_page = LoginPage(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
-        LoginPage.enter_username()
-        LoginPage.enter_password()
-        LoginPage.click_login_btn()
+
+        login_page.enter_username()
+        login_page.enter_password()
+        login_page.click_login_btn()
 
     def tearDown(self):
         self.driver.close()
@@ -54,7 +56,7 @@ class LoginPage(object):
     _parent_xpath = ".."
 
     def __init__(self, driver):
-        self.driver = driver
+        self._driver = driver
 
     def enter_username(self, username="CTC"):
         self._userId().send_keys(username)
