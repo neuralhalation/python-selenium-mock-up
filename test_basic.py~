@@ -1,0 +1,23 @@
+import pagefactory_support
+from unittest import TestCase
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+
+class PythonOrgSearch(TestCase):
+
+    def setUp(self):
+        path = "C:\\Users\\LLenk\Downloads\chromdriver_win32\chromedriver.exe"
+        self.driver = webdriver.Chrome(path)
+
+    def test_search_in_python(self):
+        driver = self.driver
+        driver.get("http://www.python.org")
+        self.assertIn("Python", driver.title)
+        elem = driver.find_element_by_name("q")
+        elem.send_keys("pycon")
+        elem.send_keys(Keys.RETURN)
+        assert "No results found." not in driver.page_source
+
+    def tearDown(self):
+        self.driver.close()
