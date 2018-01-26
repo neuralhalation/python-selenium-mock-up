@@ -58,10 +58,10 @@ class LoginPage(object):
     def __init__(self, driver):
         self._driver = driver
 
-    def enter_username(self, username="CTC"):
+    def enter_username(self, username="username"):
         self._userId().send_keys(username)
 
-    def enter_password(self, password="CTC45402"):
+    def enter_password(self, password="password"):
         self._password().send_keys(password)
 
     def click_login_btn(self):
