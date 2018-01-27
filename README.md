@@ -7,7 +7,7 @@ to use go to terminal:
 
 $ mkdir <a place to put the code> 
 $ cd <that directory you just made>
-$ git clone git https://github.com/neuralhalation/python-selenium-mock-up
+$ git clone git https://github.com/neuralhalation/python-selenium-mock-up.git
 
 Open up test_basic.py and replace the setup path to your local instance of chromedriver.exe
 
