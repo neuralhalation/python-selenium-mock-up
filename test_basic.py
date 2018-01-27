@@ -120,4 +120,4 @@ class SelectEntityModal(Modal):
         self._driver = driver
 
     def enter_filter_entities_txtbx_text(self, text):
-        self._filter_entities_input.send_keys(text)
+        self._filter_entities_input().send_keys(text)
