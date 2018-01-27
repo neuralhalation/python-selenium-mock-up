@@ -15,3 +15,5 @@ Also edit the username and password to use the correct login information
 
 Timing is still an issue in the application at the time of writing, so the solution suffers from not being able to get reliable load
 times out of the application under test. 
+
+credit for pagefactory_support goes to https://jeremykao.wordpress.com/2015/06/10/pagefactory-pattern-in-python/
