@@ -6,8 +6,11 @@ python 2.7.4
 to use go to terminal: 
 
 $ mkdir python-automation
+
 $ cd python-automation
+
 $ git clone git https://github.com/neuralhalation/python-selenium-mock-up.git
+
 
 Open up test_basic.py and replace the setup path to your local instance of chromedriver.exe
 
