@@ -3,42 +3,30 @@ from unittest import TestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
-
-class PythonOrgSearch(TestCase):
-
-    def setUp(self):
-        path = "C:\\Users\\LLenk\\Downloads\\chromedriver_win32\\chromedriver.exe"
-        self.driver = webdriver.Chrome(path)
-
-    def test_search_in_python(self):
-        driver = self.driver
-        driver.get("http://www.python.org")
-        self.assertIn("Python", driver.title)
-        elem = driver.find_element_by_name("q")
-        elem.send_keys("pycon")
-        elem.send_keys(Keys.RETURN)
-        assert "No results found." not in driver.page_source
-
-    def tearDown(self):
-        self.driver.close()
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.common.exceptions import TimeoutException
 
 
 class LoginTests(TestCase):
 
     def setUp(self):
-        path = "C:\\Users\\LLenk\\Downloads\\chromedriver_win32\\chromedriver.exe"
+        path = "your/path/to/chromedriver.exe"
         self.driver = webdriver.Chrome(path)
 
     def test_basic_login_cactus_5(self):
         """Basic happy path test of the login"""
         driver = self.driver
         login_page = LoginPage(driver)
+        select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
 
-        login_page.enter_username()
-        login_page.enter_password()
+        login_page.enter_username("username")
+        login_page.enter_password("password")
         login_page.click_login_btn()
+        select_entities_modal.wait_for_modal_dialog(300)
+
+        select_entities_modal.click_ok_button()
 
     def tearDown(self):
         self.driver.close()
@@ -82,3 +70,54 @@ class LoginPage(object):
         if "has error" in classes:
             is_msg_displayed = True
         return is_msg_displayed
+
+
+class Modal(object):
+    _close_button = callable_find_by(
+        xpath="//div[@class='modal-header']/button[@aria-label='Close']")
+    _modal_label = callable_find_by(id_="exampleModalLabel")
+    _ok_button = callable_find_by(
+        xpath="//div[@class='modal-footer']/button[@id='ok_button']")
+    _cancel_button = callable_find_by(
+        xpath="//div[@class='modal-footer']/button[contains(., 'Cancel')]")
+    _new_button = callable_find_by(
+        xpath="//div[@class='modal-footer']/button/contains(., 'New')]")
+
+    def __init__(self, driver):
+        self._driver = driver
+
+    def click_close_button(self):
+        self._close_button().click()
+
+    def click_ok_button(self):
+        self._ok_button().click()
+
+    def click_cancel_button(self):
+        self._cancel_button().click()
+
+    def click_new_button(self):
+        self._new_button().click()
+
+    def wait_for_modal_dialog(self, time_to_wait):
+        try:
+            elem = WebDriverWait(self._driver, time_to_wait).until(
+                ec.presence_of_element_located((
+                    By.XPATH,
+                    "//div[@class='modal-footer']/button[@id='ok_button']")))
+        except TimeoutException:
+            print "Loading took too much time!"
+
+
+class SelectEntityModal(Modal):
+    _filter_entities_input = callable_find_by(id_="FilterEntities_input")
+    _entity_selection_div = callable_find_by(id_="custom-multiselect")
+    _default_entity = callable_find_by(
+        xpath="//div[@class='custom-multiselect']/label/span[1]")
+    _entity = callable_find_by(
+        xpath="//div[@class='custom-multiselect']/label/span")
+
+    def __init__(self, driver):
+        self._driver = driver
+
+    def enter_filter_entities_txtbx_text(self, text):
+        self._filter_entities_input.send_keys(text)
