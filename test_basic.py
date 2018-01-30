@@ -100,6 +100,108 @@ class Form(object):
     _notesBtn = callable_find_by(id_="notesToolbar_link")
     _adminBtn = callable_find_by(id_="adminToolbar_link")
 
+    def click_home(self):
+        self._home().click()
+
+    def click_dashboard(self):
+        self._dashboard().click()
+
+    def click_tasks(self):
+        self._tasks().click()
+
+    def click_inbox(self):
+        self._inbox().click()
+
+    def click_system(self):
+        self._system().click()
+
+    def click_search_btn(self):
+        self._searchButton().click()
+
+    def enter_search_text(self, text):
+        self._searchTextBox().send_keys(text)
+
+    def click_provider_search_btn(self):
+        self._profilesSearchOption().click()
+
+    def click_form_search_btn(self):
+        self._formSearchOption().click()
+
+    def click_queries_search_btn(self):
+        self._queriesSearchOption().click()
+
+    def click_document_search_btn(self):
+        self._documentSearchOption().click()
+
+    def click_reports_search_btn(self):
+        self._reportsSearchOption().click()
+
+    def click_profiles_search_btn(self):
+        self._profilesSearchOption().click()
+
+    def click_packets_search_btn(self):
+        self._packetsSearchOption().click()
+
+    def click_reference_list_search_btn(self):
+        self._referenceListSearchOption().click()
+
+    def click_system_forms_search_btn(self):
+        self._groupsSeachOption().click()
+
+    def click_form_bank_search_btn(self):
+        self._formbankSearchOption().click()
+
+    def click_quick_launch_hide_btn(self):
+        self._quickLaunchHideButton().click()
+
+    def click_new_link(self):
+        self._newLink().click()
+
+    def click_save_link(self):
+        self._saveLink().click()
+
+    def click_search_link(self):
+        self._searchLink().click()
+
+    def click_refresh_link(self):
+        self._refreshLink().click()
+
+    def click_run_link(self):
+        self._runLink().click()
+
+    def click_delete_link(self):
+        self._deleteLink().click()
+
+    def click_first_element_link(self):
+        self._firstElementLink().click()
+
+    def click_move_back_link(self):
+        self._moveBackLink().click()
+
+    def click_main_grid_link(self):
+        self._mainGridLink().click()
+
+    def click_move_forward_link(self):
+        self._moveForwardLink().click()
+
+    def click_last_element_link(self):
+        self._lastElementLink().click()
+
+    def click_pin_btn(self):
+        self._pinBtn().click()
+
+    def click_tasks_btn(self):
+        self._tasksBtn().click()
+
+    def click_images_btn(self):
+        self._imagesBtn().click()
+
+    def click_notes_btn(self):
+        self._notesBtn().click()
+
+    def click_admin_btn(self):
+        self._adminBtn().click()
+
 
 class LoginPage(Form):
 
