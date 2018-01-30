@@ -11,7 +11,7 @@ from selenium.common.exceptions import TimeoutException
 class LoginTests(TestCase):
 
     def setUp(self):
-        path = "C:\\Users\\LLenk\\mock-test\\chromedriver.exe"
+        path = "/path/to/chromedriver.exe"
         self.driver = webdriver.Chrome(path)
 
     def test_basic_login_cactus_5(self):
@@ -21,8 +21,8 @@ class LoginTests(TestCase):
         select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
 
-        login_page.enter_username("CTC")
-        login_page.enter_password("CTC45402")
+        login_page.enter_username("username")
+        login_page.enter_password("password")
         login_page.click_login_btn()
         select_entities_modal.wait_for_modal_dialog(300)
 
