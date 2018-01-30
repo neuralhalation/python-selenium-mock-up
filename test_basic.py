@@ -11,7 +11,7 @@ from selenium.common.exceptions import TimeoutException
 class LoginTests(TestCase):
 
     def setUp(self):
-        path = "your/path/to/chromedriver.exe"
+        path = "C:\\Users\\LLenk\\mock-test\\chromedriver.exe"
         self.driver = webdriver.Chrome(path)
 
     def test_basic_login_cactus_5(self):
@@ -21,18 +21,87 @@ class LoginTests(TestCase):
         select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
 
-        login_page.enter_username("username")
-        login_page.enter_password("password")
+        login_page.enter_username("CTC")
+        login_page.enter_password("CTC45402")
         login_page.click_login_btn()
         select_entities_modal.wait_for_modal_dialog(300)
 
         select_entities_modal.click_ok_button()
 
+    def test_login_fails_with_no_creds(self):
+        driver = self.driver
+        login_page = LoginPage(driver)
+        select_entities_modal = SelectEntityModal(driver)
+        driver.get("http://ctc-qa-app2k16:83/web-external/")
+        login_page.click_login_btn()
+
     def tearDown(self):
         self.driver.close()
 
 
-class LoginPage(object):
+class Form(object):
+    _entityHeader = callable_find_by(xpath="//div[@class='entity']")
+    _header = callable_find_by(xpath="//div[@class='section-header']/h1'")
+    _home = callable_find_by(xpath="//a[@routerlink='cactus/home']")
+    _dashboard = callable_find_by(
+        xpath="//a[@routerlink='cactus/dashboard']")
+    _tasks = callable_find_by(xpath="a[@routerlink='cactus/tasks']")
+    _inbox = callable_find_by(
+        xpath="//a[@routerlink='cactus/inbox']")
+    _system = callable_find_by(
+        xpath="//a[@routerlink='cactus/system-settings']")
+    _searchButton = callable_find_by(id_="search_button")
+    _searchTextBox = callable_find_by(id_="globalSearch_textfield")
+    _providerSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/providers']")
+    _formSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/forms']")
+    _queriesSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/queries']")
+    _documentSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/documents']")
+    _reportsSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/reports']")
+    _profilesSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/profiles']")
+    _packetsSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/packets']")
+    _referenceListSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/referencelists']")
+    _systemFormsSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/systemforms']")
+    _groupsSeachOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/groups']")
+    _formbankSearchOption = callable_find_by(
+        xpath="//li[@data-redirect='cactus/searchresults/formbank']")
+    _quickLaunchContainer = "//div[@class='quick-launch']"
+    _quickLaunchDdl = callable_find_by(
+        xpath="//div[@class='quick-launch']/div[contains(2class, 'dropdown')]")
+    _quickLaunchHideButton = callable_find_by(
+        xpath="//div[@class='hide-menu']")
+    _spinner = callable_find_by(class_name="spinner_icon")
+
+    # bottom toolbar
+
+    _newLink = callable_find_by(id_="newToolbar_link")
+    _saveLink = callable_find_by(id_="saveToolbar_link")
+    _searchLink = callable_find_by(id_="searchToolbar_link")
+    _refreshLink = callable_find_by(id_="refreshToolbar_link")
+    _runLink = callable_find_by(id_="runToolbar_link")
+    _deleteLink = callable_find_by(id_="deleteToolbar_link")
+    _firstElementLink = callable_find_by(id_="firstElementToolbar_link")
+    _moveBackLink = callable_find_by(id_="moveBackToolbar_link")
+    _mainGridLink = callable_find_by(id_="mainGridToolbar_link")
+    _moveForwardLink = callable_find_by(id_="moveForward_link")
+    _lastElementLink = callable_find_by(id_="lastElementToolbar_link")
+    _pinBtn = callable_find_by(id_="pinToolbar_link")
+    _tasksBtn = callable_find_by(id_="tasksToolbar_link")
+    _imagesBtn = callable_find_by(id_="imagesToolbar_link")
+    _notesBtn = callable_find_by(id_="notesToolbar_link")
+    _adminBtn = callable_find_by(id_="adminToolbar_link")
+
+
+class LoginPage(Form):
 
     _logIn = callable_find_by(id_="login_button")
     _userId = callable_find_by(id_="username_textfield")
@@ -65,7 +134,8 @@ class LoginPage(object):
 
     def is_no_password_validation_msg_displayed(self):
         is_msg_displayed = False
-        parent = self._noPasswordValidationMsg().find_element(By.XPATH(self._parent_xpath))
+        parent = self._noPasswordValidationMsg().find_element(
+            By.XPATH(self._parent_xpath))
         classes = parent.get_attribute("class")
         if "has error" in classes:
             is_msg_displayed = True
