@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 import time
+import sure
 
 
 class LoginTests(TestCase):
@@ -21,15 +22,18 @@ class LoginTests(TestCase):
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
-        login_page.enter_username("username")
-        login_page.enter_password("password")
+        login_page.enter_username("CTC")
+        login_page.enter_password("CTC45402")
         login_page.click_login_btn()
         time.sleep(0.5)
-        modal_body = driver.find_element_by_xpath(
+        entity = driver.find_element_by_xpath(
             "//*[@id='entity_0_description']")
-        modal_body.click()
+        entity.click()
         select_entities_modal.click_ok_button()
         time.sleep(5)
+        welcome_message = driver.find_element_by_xpath(
+            "//h3[contains(., 'You are currently logged into CACTUS Health Systems (Corporate).')]")
+        welcome_message.should_not.be.none
 
     def test_login_fails_with_no_creds(self):
         driver = self.driver
