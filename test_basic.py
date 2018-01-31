@@ -21,7 +21,7 @@ class LoginTests(TestCase):
         driver = self.driver
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
-        driver.get("http://ctc-qa-app2k16:83/web-external/")
+        driver.get("/some/url/here")
         login_page.enter_username("username")
         login_page.enter_password("password")
         login_page.click_login_btn()
@@ -41,7 +41,7 @@ class LoginTests(TestCase):
         driver = self.driver
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
-        driver.get("http://ctc-qa-app2k16:83/web-external/")
+        driver.get("some/url/here")
         login_page.click_login_btn()
         username_error = driver.find_element_by_xpath(
             "//*[contains(., 'Username is required')]")
@@ -246,7 +246,8 @@ class LoginPage(Form):
 
     def is_no_username_validation_msg_displayed(self):
         is_msg_displayed = False
-        parent = self._noUsernameValidationMsg().find_element(By.XPATH(self._parent_xpath))
+        parent = self._noUsernameValidationMsg().find_element(
+            str(By.XPATH(self._parent_xpath)))
         classes = parent.get_attribute("class")
         if "has error" in classes:
             is_msg_displayed = True
@@ -255,7 +256,7 @@ class LoginPage(Form):
     def is_no_password_validation_msg_displayed(self):
         is_msg_displayed = False
         parent = self._noPasswordValidationMsg().find_element(
-            By.XPATH(self._parent_xpath))
+            By.XPATH(str(self._parent_xpath)))
         classes = parent.get_attribute("class")
         if "has error" in classes:
             is_msg_displayed = True

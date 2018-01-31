@@ -1,0 +1,9 @@
+* Python TODO
+** TODO Get Spine integration [2018-31-01]
+*** Request Library
+** TODO Jenkins [2018-31-01]
+*** Python w/ Jenkins
+- https://jenkins.io/solutions/python/
+** TODO VSO/TFS python build task [2018-31-01]
+** TODO BrowserStack integration [2018-31-01]
+** TODO Packages [2018-31-01]
