@@ -2,7 +2,7 @@
 *$py.class
 __pycache__/
 *.pyc
-
+*.org
 # distributeion / packaging
 .Python
 build/
