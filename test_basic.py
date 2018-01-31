@@ -36,6 +36,8 @@ class LoginTests(TestCase):
         welcome_message.should_not.be.none
 
     def test_login_fails_with_no_creds(self):
+        """Test verifies that error messages appear when no valid 
+           login info is provided"""
         driver = self.driver
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
