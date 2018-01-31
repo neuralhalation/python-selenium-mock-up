@@ -22,8 +22,8 @@ class LoginTests(TestCase):
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
-        login_page.enter_username("CTC")
-        login_page.enter_password("CTC45402")
+        login_page.enter_username("username")
+        login_page.enter_password("password")
         login_page.click_login_btn()
         time.sleep(0.5)
         entity = driver.find_element_by_xpath(
@@ -41,6 +41,12 @@ class LoginTests(TestCase):
         select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
         login_page.click_login_btn()
+        username_error = driver.find_element_by_xpath(
+            "//*[contains(., 'Username is required')]")
+        password_error = driver.find_element_by_xpath(
+            "//*[contains(., 'Password is required')]")
+        username_error.should_not.be.none
+        password_error.should_not.be.none
 
     def tearDown(self):
         self.driver.close()
