@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
+import time
 
 
 class LoginTests(TestCase):
@@ -20,13 +21,15 @@ class LoginTests(TestCase):
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
         driver.get("http://ctc-qa-app2k16:83/web-external/")
-
         login_page.enter_username("username")
         login_page.enter_password("password")
         login_page.click_login_btn()
-        select_entities_modal.wait_for_modal_dialog(300)
-
+        time.sleep(0.5)
+        modal_body = driver.find_element_by_xpath(
+            "//*[@id='entity_0_description']")
+        modal_body.click()
         select_entities_modal.click_ok_button()
+        time.sleep(5)
 
     def test_login_fails_with_no_creds(self):
         driver = self.driver
@@ -249,7 +252,7 @@ class Modal(object):
         xpath="//div[@class='modal-header']/button[@aria-label='Close']")
     _modal_label = callable_find_by(id_="exampleModalLabel")
     _ok_button = callable_find_by(
-        xpath="//div[@class='modal-footer']/button[@id='ok_button']")
+        xpath="//div[@class='modal-footer']/button[@id='entity_message_ok_button']")
     _cancel_button = callable_find_by(
         xpath="//div[@class='modal-footer']/button[contains(., 'Cancel')]")
     _new_button = callable_find_by(
@@ -293,3 +296,10 @@ class SelectEntityModal(Modal):
 
     def enter_filter_entities_txtbx_text(self, text):
         self._filter_entities_input().send_keys(text)
+
+    def select_entity(self, entity_text, driver):
+        head = "//div[@id='entity_select'/label/span[contains(., '"
+        foot = "')]"
+        xpath = str(head + entity_text + foot)
+        entity = driver.find_element_by_xpath(str(xpath))
+        entity().click()
