@@ -115,6 +115,9 @@ class Form(object):
     _notesBtn = callable_find_by(id_="notesToolbar_link")
     _adminBtn = callable_find_by(id_="adminToolbar_link")
 
+    def __init__(self, driver):
+        self._driver = driver
+
     def click_home(self):
         self._home().click()
 
