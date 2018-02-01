@@ -1,9 +1,9 @@
-# python-selenium-mock-up
+# python-selenium-mock-up :rocket:
 a mock up of how our automation solution would look like in python (condensed)
 
-python 2.7.4
+python 3.6.4
 
-to use go to terminal: 
+## To Use:
 
 $ mkdir python-automation
 
@@ -11,12 +11,18 @@ $ cd python-automation
 
 $ git clone git https://github.com/neuralhalation/python-selenium-mock-up.git
 
+### Setup:
 
-Open up test_basic.py and replace the setup path to your local instance of chromedriver.exe
+- install required modules with `pip install -r requirements.txt`
 
-I recommend putting chromedriver right in with your python-automation folder just created
+- Change the config.ini.sample file to config.ini, and add your configuration values (chromedriver path, site URL, login credentials)  
 
-Change the config.ini.sample file to config.ini, and add your configuration values
+
+
+
+
+
+
 
 Start a virtualenv and make sure selenium is installed w/: $ pip install selenium 
 
