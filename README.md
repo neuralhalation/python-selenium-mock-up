@@ -16,7 +16,7 @@ Open up test_basic.py and replace the setup path to your local instance of chrom
 
 I recommend putting chromedriver right in with your python-automation folder just created
 
-Also edit the username and password to use the correct login information
+Change the config.ini.sample file to config.ini, and add your configuration values
 
 Start a virtualenv and make sure selenium is installed w/: $ pip install selenium 
 

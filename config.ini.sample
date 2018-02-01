@@ -1,0 +1,9 @@
+[driver]
+path = C:\\Path\\To\\chromedriver.exe
+
+[cactus]
+url = http://url-goes-here.com
+
+[credentials]
+username = username
+passwd = password

@@ -1,3 +1,4 @@
+import sure
 from pagefactory_support import cacheable, callable_find_by
 from unittest import TestCase
 from selenium import webdriver
@@ -7,23 +8,28 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 import time
-import sure
+import configparser
 
 
 class LoginTests(TestCase):
 
     def setUp(self):
-        path = "/path/to/chromedriver.exe"
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        path = (config['driver']['path'])
         self.driver = webdriver.Chrome(path)
 
     def test_basic_login_cactus_5(self):
         """Basic happy path test of the login"""
+        config = configparser.ConfigParser()
+        config.read('config.ini')
         driver = self.driver
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
-        driver.get("/some/url/here")
-        login_page.enter_username("username")
-        login_page.enter_password("password")
+        driver.get(config['cactus']['url'])
+        driver.implicitly_wait(30)
+        login_page.enter_username(config['credentials']['username'])
+        login_page.enter_password(config['credentials']['passwd'])
         login_page.click_login_btn()
         time.sleep(0.5)
         entity = driver.find_element_by_xpath(
@@ -38,10 +44,13 @@ class LoginTests(TestCase):
     def test_login_fails_with_no_creds(self):
         """Test verifies that error messages appear when no valid 
            login info is provided"""
+        config = configparser.ConfigParser()
+        config.read('config.ini')
         driver = self.driver
         login_page = LoginPage(driver)
         select_entities_modal = SelectEntityModal(driver)
-        driver.get("some/url/here")
+        driver.get(config['cactus']['url'])
+        driver.implicitly_wait(30)
         login_page.click_login_btn()
         username_error = driver.find_element_by_xpath(
             "//*[contains(., 'Username is required')]")
@@ -296,7 +305,7 @@ class Modal(object):
                     By.XPATH,
                     "//div[@class='modal-footer']/button[@id='ok_button']")))
         except TimeoutException:
-            print "Loading took too much time!"
+            print("Loading took too much time!")
 
 
 class SelectEntityModal(Modal):

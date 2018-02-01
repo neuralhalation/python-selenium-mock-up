@@ -31,12 +31,12 @@ def _callable_find_by(how, using, multiple, cacheable, context, driver_attr, **k
             lookup = ctx.find_elements if multiple else ctx.find_element
             return lookup(how, using)
 
-        if len(kwargs) != 1 or kwargs.keys()[0] not in _strategy_kwargs :
+        if len(kwargs) != 1 or list(kwargs.keys())[0] not in _strategy_kwargs:
             raise ValueError(
                 "If 'how' AND 'using' are not specified, one and only one of the following "
                 "valid keyword arguments should be provided: %s." % _strategy_kwargs)
 
-        key = kwargs.keys()[0]; value = kwargs[key]
+        key = list(kwargs.keys())[0]; value = kwargs[key]
         suffix = key[:-1] if key.endswith('_') else key # find_element(s)_by_xxx
         prefix = 'find_elements_by' if multiple else 'find_element_by'
         lookup = getattr(ctx, '%s_%s' % (prefix, suffix))
